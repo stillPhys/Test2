@@ -12,9 +12,16 @@ cursor = db.cursor()
 # Fetch a single row using fetchone() method.
 #data = cursor.fetchone()
 
-sock = socket.socket()
-sock.bind(('', 8080))
-sock.listen(16)
+connected = 0
+while(connected == 0):
+	try:
+		sock = socket.socket()
+		sock.bind(('', 8080))
+		sock.listen(16)
+		connected = 1
+	except Exception as e:
+		print(e)
+		time.sleep(1)
 
 def writeValue(data):
 	s = "INSERT INTO  sensor_test (time, temperature) VALUES (NOW(), '" + data + "');"
